@@ -17,6 +17,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { StatusModule } from './status/status.module';
 import { TestModule } from './test/test.module';
 import { OptionsModule } from './options/options.module';
+import { TypeModule } from './type/type.module';
 
 
 @Module({
@@ -29,7 +30,8 @@ import { OptionsModule } from './options/options.module';
     SubscriptionsModule,
     TestModule,
     StatusModule,
-    OptionsModule
+    OptionsModule,
+    TypeModule
   ],
   controllers: [HealthController],
   providers: [

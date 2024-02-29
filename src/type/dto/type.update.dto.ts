@@ -1,11 +1,11 @@
+
 import { IsNotEmpty, IsOptional, Length, IsDate, IsBoolean } from 'class-validator';
 
-export class StatusCreateDto {
-
+export class TypesUpdateDto {
 
 	@IsNotEmpty()
 	@Length(1, 70)
-	value?: string;
+	value: string;
 
 	@IsOptional()
 	@IsBoolean()
