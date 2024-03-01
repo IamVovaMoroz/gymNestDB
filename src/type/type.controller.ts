@@ -12,7 +12,7 @@ export class TypeController {
 	constructor(private readonly typeService: TypeService) { }
 
 	@Post('create')
-	async createType(@Body() typeData: TypesCreateDto): Promise<TypesEntity> {
+	async createTypes(@Body() typeData: TypesCreateDto): Promise<TypesEntity> {
 		return await this.typeService.createTypes(typeData);
 	}
 
@@ -41,7 +41,7 @@ export class TypeController {
 	}
 
 	@Get(':id')
-	async getTypeById(@Param('id') typeId?: string): Promise<TypesEntity> {
+	async getTypesById(@Param('id') typeId?: string): Promise<TypesEntity> {
 		return this.typeService.getTypesById(+typeId);
 	}
 

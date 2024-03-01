@@ -33,7 +33,7 @@ export class OptionsController {
 
 	@ApiResponse({ type: OptionEntity, isArray: true })
 	@Get('all')
-	async findAllStatus(
+	async findAllOptions(
 		@Query('page') page: string,
 		@Query('limit') limit: string,
 	): Promise<PaginatedData<OptionEntity>> {

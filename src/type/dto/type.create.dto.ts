@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, Length, IsDate, IsBoolean } from 'class-validat
 
 export class TypesCreateDto {
 
-	@IsOptional()
+	
 	@IsNotEmpty()
 	@Length(1, 70)
 	value?: string;

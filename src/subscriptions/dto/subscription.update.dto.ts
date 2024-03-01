@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsOptional, Length, IsString, IsDate, IsNumber, IsBoolean } from 'class-validator';
 
-
 export class SubscriptionUpdateDto {
 
 	@IsOptional()
@@ -65,5 +64,4 @@ export class SubscriptionUpdateDto {
 	@IsOptional()
 	@IsNumber()
 	status_id: number;
-
 }

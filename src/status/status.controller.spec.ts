@@ -3,7 +3,6 @@ import { StatusController } from './status.controller';
 import { StatusService } from './status.service';
 import { StatusEntity } from './entities/status.entity';
 import { NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { mockUpdateStatusDto, MockStatusDto } from '../common/constants';
 import { PaginatedData } from '../types/interface';
 
@@ -14,7 +13,6 @@ const mockStatus: StatusEntity = new StatusEntity();
 describe('StatusController', () => {
 	let controller: StatusController;
 	let statusService: StatusService;
-	let statusRepository: Repository<StatusEntity>; // Создаем переменную для Repository
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -146,6 +144,49 @@ describe('StatusController', () => {
 	});
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
