@@ -14,7 +14,6 @@ const mockPage = 1;
 const mockLimit = 10;
 const userId = 1;
 
-
 describe('UserService', () => {
   let service: UserService;
   let userRepository: Repository<UserEntity>;

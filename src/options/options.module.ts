@@ -7,6 +7,6 @@ import { OptionEntity } from './entities/option.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([OptionEntity])],
   controllers: [OptionsController],
-  providers: [OptionsService]
+  providers: [OptionsService],
 })
 export class OptionsModule {}

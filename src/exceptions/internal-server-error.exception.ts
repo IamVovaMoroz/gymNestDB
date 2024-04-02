@@ -93,7 +93,8 @@ export class InternalServerErrorException extends HttpException {
    */
   static INTERNAL_SERVER_ERROR = (error: any) => {
     return new InternalServerErrorException({
-      message: 'We are sorry, something went wrong on our end. Please try again later or contact our support team for assistance.',
+      message:
+        'We are sorry, something went wrong on our end. Please try again later or contact our support team for assistance.',
       code: ExceptionConstants.InternalServerErrorCodes.INTERNAL_SERVER_ERROR,
       cause: error,
     });

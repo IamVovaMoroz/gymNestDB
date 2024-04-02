@@ -9,9 +9,6 @@ import { PaginatedData } from '../types/interface';
 const mockUserId = '1';
 const mockUser: UserEntity = new UserEntity();
 
-
-
-
 describe('UserController', () => {
   let controller: UserController;
   let userService: UserService;
@@ -48,8 +45,6 @@ describe('UserController', () => {
 
   describe('createUser', () => {
     it('should return created user', async () => {
-
-
       jest.spyOn(userService, 'createUser').mockResolvedValueOnce(mockUser as UserEntity);
 
       const result = await controller.createUser(MokUserDto);
@@ -67,7 +62,6 @@ describe('UserController', () => {
   });
   describe('updateUser', () => {
     it('should return updated user', async () => {
-
       const mockUser = {
         id: 1,
         first_name: mockUpdateUserDto.first_name,
@@ -85,7 +79,6 @@ describe('UserController', () => {
     });
 
     it('should throw NotFoundException if user update fails', async () => {
-
       jest.spyOn(userService, 'updateUser').mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.updateUser(mockUserId, mockUpdateUserDto)).rejects.toThrow(NotFoundException);
@@ -94,14 +87,12 @@ describe('UserController', () => {
   });
   describe('softDeleteUser', () => {
     it('should successfully soft delete the user', async () => {
-
       await controller.softDeleteUser(mockUserId);
 
       expect(userService.softDeleteUser).toHaveBeenCalledWith(+mockUserId);
     });
 
     it('should throw NotFoundException if user does not exist', async () => {
-
       jest.spyOn(userService, 'softDeleteUser').mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.softDeleteUser(mockUserId)).rejects.toThrow(NotFoundException);
@@ -142,7 +133,6 @@ describe('UserController', () => {
   });
   describe('getUserById', () => {
     it('should return user by id', async () => {
-
       jest.spyOn(userService, 'getUserById').mockResolvedValueOnce(mockUser);
 
       const result = await controller.getUserById(mockUserId);
@@ -152,7 +142,6 @@ describe('UserController', () => {
     });
 
     it('should throw NotFoundException if user not found', async () => {
-
       jest.spyOn(userService, 'getUserById').mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.getUserById(mockUserId)).rejects.toThrow(NotFoundException);

@@ -17,7 +17,8 @@ describe('SubscriptionsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SubscriptionsService,
+      providers: [
+        SubscriptionsService,
         {
           provide: getRepositoryToken(SubscriptionEntity),
           useClass: Repository,
@@ -36,7 +37,6 @@ describe('SubscriptionsService', () => {
   describe('createSubscription', () => {
     it('should create a new subscription', async () => {
       const mockDto: SubscriptionCreateDto = {
-
         description: 'example_description',
         freezing: true,
         price: 10.99,
@@ -47,7 +47,6 @@ describe('SubscriptionsService', () => {
         text: 'example_text',
         title: 'example_title',
         status_id: 1,
-
       };
 
       jest.spyOn(subscriptionRepository, 'findOne').mockResolvedValueOnce(null);
@@ -85,20 +84,27 @@ describe('SubscriptionsService', () => {
       };
 
       jest.spyOn(subscriptionRepository, 'findOne').mockResolvedValueOnce(existingSubscription);
-      jest.spyOn(subscriptionRepository, 'save').mockResolvedValueOnce({ ...existingSubscription, ...mockUpdateSubscriptionDto });
+      jest
+        .spyOn(subscriptionRepository, 'save')
+        .mockResolvedValueOnce({ ...existingSubscription, ...mockUpdateSubscriptionDto });
 
       const result = await service.updateSubscription(mockSubscriptionId, mockUpdateSubscriptionDto);
 
       expect(result).toEqual({ ...existingSubscription, ...mockUpdateSubscriptionDto });
       expect(subscriptionRepository.findOne).toHaveBeenCalledWith({ where: { id: mockSubscriptionId } });
-      expect(subscriptionRepository.save).toHaveBeenCalledWith({ ...existingSubscription, ...mockUpdateSubscriptionDto });
+      expect(subscriptionRepository.save).toHaveBeenCalledWith({
+        ...existingSubscription,
+        ...mockUpdateSubscriptionDto,
+      });
     });
 
     it('should throw NotFoundException if subscription does not exist', async () => {
       jest.spyOn(subscriptionRepository, 'findOne').mockResolvedValueOnce(null);
       const saveSpy = jest.spyOn(subscriptionRepository, 'save');
 
-      await expect(service.updateSubscription(mockSubscriptionId, mockUpdateSubscriptionDto)).rejects.toThrow(NotFoundException);
+      await expect(service.updateSubscription(mockSubscriptionId, mockUpdateSubscriptionDto)).rejects.toThrow(
+        NotFoundException,
+      );
       expect(saveSpy).not.toHaveBeenCalled();
     });
   });

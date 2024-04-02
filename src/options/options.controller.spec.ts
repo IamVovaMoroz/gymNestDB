@@ -46,7 +46,6 @@ describe('OptionsController', () => {
     it('should return created Option', async () => {
       jest.spyOn(optionsService, 'createOption').mockResolvedValueOnce(mockOption);
 
-
       const result = await controller.createOption(MockOptionDto);
 
       expect(result).toEqual(mockOption);
@@ -55,7 +54,6 @@ describe('OptionsController', () => {
 
     it('should throw NotFoundException if Option creation fails', async () => {
       jest.spyOn(optionsService, 'createOption').mockRejectedValueOnce(new NotFoundException());
-
 
       await expect(controller.createOption(MockOptionDto)).rejects.toThrow(NotFoundException);
       expect(optionsService.createOption).toHaveBeenCalledWith(MockOptionDto);
@@ -114,7 +112,6 @@ describe('OptionsController', () => {
 
       jest.spyOn(optionsService, 'findAllOptions').mockResolvedValueOnce(mockResult);
 
-
       const result = await controller.findAllOptions(mockPage, mockLimit);
 
       expect(result).toEqual(mockResult);
@@ -126,7 +123,6 @@ describe('OptionsController', () => {
     it('should return Option by id', async () => {
       jest.spyOn(optionsService, 'getOptionById' as keyof OptionsService).mockResolvedValueOnce(mockOption);
 
-
       const result = await controller.getOptionById(mockOptionId);
 
       expect(result).toEqual(mockOption);
@@ -134,11 +130,12 @@ describe('OptionsController', () => {
     });
 
     it('should throw NotFoundException if Option not found', async () => {
-      jest.spyOn(optionsService, 'getOptionById' as keyof OptionsService).mockRejectedValueOnce(new NotFoundException());
+      jest
+        .spyOn(optionsService, 'getOptionById' as keyof OptionsService)
+        .mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.getOptionById(mockOptionId)).rejects.toThrow(NotFoundException);
       expect(optionsService.getOptionById).toHaveBeenCalledWith(+mockOptionId);
     });
   });
 });
-

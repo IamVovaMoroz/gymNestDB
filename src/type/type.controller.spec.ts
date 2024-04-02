@@ -46,7 +46,6 @@ describe('TypeController', () => {
     it('should return created Type', async () => {
       jest.spyOn(typeService, 'createTypes' as keyof TypeService).mockResolvedValueOnce(mockType as TypesEntity);
 
-
       const result = await controller.createTypes(MockTypeDto);
 
       expect(result).toEqual(mockType);
@@ -55,7 +54,6 @@ describe('TypeController', () => {
 
     it('should throw NotFoundException if Type creation fails', async () => {
       jest.spyOn(typeService, 'createTypes' as keyof TypeService).mockRejectedValueOnce(new NotFoundException());
-
 
       await expect(controller.createTypes(MockTypeDto)).rejects.toThrow(NotFoundException);
       expect(typeService.createTypes).toHaveBeenCalledWith(MockTypeDto);
@@ -86,7 +84,6 @@ describe('TypeController', () => {
       expect(typeService.updateTypes).toHaveBeenCalledWith(+mockTypeId, mockUpdateTypeDto);
     });
   });
-
 
   describe('deleteTypes', () => {
     it('should successfully delete the Type', async () => {
@@ -125,7 +122,6 @@ describe('TypeController', () => {
   describe('getTypesById', () => {
     it('should return Type by id', async () => {
       jest.spyOn(typeService, 'getTypesById' as keyof TypeService).mockResolvedValueOnce(mockType);
-
 
       const result = await controller.getTypesById(mockTypeId);
 

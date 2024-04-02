@@ -8,41 +8,37 @@ import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('subscriptions')
 export class SubscriptionsController {
-	constructor(private readonly subscriptionsService: SubscriptionsService) { }
+  constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
-	@Post('create')
-	async createSubscription(@Body() subscriptionData: SubscriptionCreateDto): Promise<SubscriptionEntity> {
-		return await this.subscriptionsService.createSubscription(subscriptionData);
-	}
+  @Post('create')
+  async createSubscription(@Body() subscriptionData: SubscriptionCreateDto): Promise<SubscriptionEntity> {
+    return await this.subscriptionsService.createSubscription(subscriptionData);
+  }
 
-	@Patch(':id')
-	async updateSubscription(
-		@Param('id') id: string,
-		@Body() updateSubscriptionData: SubscriptionUpdateDto,
-	): Promise<SubscriptionEntity> {
-		return this.subscriptionsService.updateSubscription(+id, updateSubscriptionData);
-	}
+  @Patch(':id')
+  async updateSubscription(
+    @Param('id') id: string,
+    @Body() updateSubscriptionData: SubscriptionUpdateDto,
+  ): Promise<SubscriptionEntity> {
+    return this.subscriptionsService.updateSubscription(+id, updateSubscriptionData);
+  }
 
-	@Delete(':id')
-	async deleteSubscription(@Param('id') id: string): Promise<void> {
-		await this.subscriptionsService.deleteSubscription(+id);
-	}
+  @Delete(':id')
+  async deleteSubscription(@Param('id') id: string): Promise<void> {
+    await this.subscriptionsService.deleteSubscription(+id);
+  }
 
-	
+  @ApiResponse({ type: SubscriptionEntity, isArray: true })
+  @Get('all')
+  async findAllSubscription(
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ): Promise<PaginatedData<SubscriptionEntity>> {
+    return this.subscriptionsService.findAllSubscription(+page, +limit);
+  }
 
-	@ApiResponse({ type: SubscriptionEntity, isArray: true })
-	@Get('all')
-	async findAllSubscription(
-		@Query('page') page: string,
-		@Query('limit') limit: string,
-	): Promise<PaginatedData<SubscriptionEntity>> {
-		return this.subscriptionsService.findAllSubscription(+page, +limit);
-	}
-
-	@Get(':id')
-	async getSubscriptionById(@Param('id') subscrId?: string): Promise<SubscriptionEntity> {
-		return this.subscriptionsService.getSubscriptionById(+subscrId);
-	}
-
-
+  @Get(':id')
+  async getSubscriptionById(@Param('id') subscrId?: string): Promise<SubscriptionEntity> {
+    return this.subscriptionsService.getSubscriptionById(+subscrId);
+  }
 }

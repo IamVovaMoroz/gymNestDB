@@ -68,16 +68,24 @@ describe('SubscriptionsController', () => {
       const result = await controller.updateSubscription(mockSubscriptionId, mockUpdateSubscriptionDto);
 
       expect(result.id).toEqual(updatedSubscription.id);
-   
+
       expect(result.description).toEqual(updatedSubscription.description);
-      expect(subscriptionsService.updateSubscription).toHaveBeenCalledWith(+mockSubscriptionId, mockUpdateSubscriptionDto);
+      expect(subscriptionsService.updateSubscription).toHaveBeenCalledWith(
+        +mockSubscriptionId,
+        mockUpdateSubscriptionDto,
+      );
     });
 
     it('should throw NotFoundException if subscription update fails', async () => {
       jest.spyOn(subscriptionsService, 'updateSubscription').mockRejectedValueOnce(new NotFoundException());
 
-      await expect(controller.updateSubscription(mockSubscriptionId, mockUpdateSubscriptionDto)).rejects.toThrow(NotFoundException);
-      expect(subscriptionsService.updateSubscription).toHaveBeenCalledWith(+mockSubscriptionId, mockUpdateSubscriptionDto);
+      await expect(controller.updateSubscription(mockSubscriptionId, mockUpdateSubscriptionDto)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(subscriptionsService.updateSubscription).toHaveBeenCalledWith(
+        +mockSubscriptionId,
+        mockUpdateSubscriptionDto,
+      );
     });
   });
 
@@ -117,7 +125,9 @@ describe('SubscriptionsController', () => {
 
   describe('getSubscriptionById', () => {
     it('should return Subscription by id', async () => {
-      jest.spyOn(subscriptionsService, 'getSubscriptionById' as keyof SubscriptionsService).mockResolvedValueOnce(mockSubscription);
+      jest
+        .spyOn(subscriptionsService, 'getSubscriptionById' as keyof SubscriptionsService)
+        .mockResolvedValueOnce(mockSubscription);
 
       const result = await controller.getSubscriptionById(mockSubscriptionId);
 
@@ -126,11 +136,12 @@ describe('SubscriptionsController', () => {
     });
 
     it('should throw NotFoundException if Subscription not found', async () => {
-      jest.spyOn(subscriptionsService, 'getSubscriptionById' as keyof SubscriptionsService).mockRejectedValueOnce(new NotFoundException());
+      jest
+        .spyOn(subscriptionsService, 'getSubscriptionById' as keyof SubscriptionsService)
+        .mockRejectedValueOnce(new NotFoundException());
 
       await expect(controller.getSubscriptionById(mockSubscriptionId)).rejects.toThrow(NotFoundException);
       expect(subscriptionsService.getSubscriptionById).toHaveBeenCalledWith(+mockSubscriptionId);
     });
   });
 });
-

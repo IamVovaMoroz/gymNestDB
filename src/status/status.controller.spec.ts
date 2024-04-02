@@ -9,188 +9,134 @@ import { PaginatedData } from '../types/interface';
 const mockStatusId = '1';
 const mockStatus: StatusEntity = new StatusEntity();
 
-
 describe('StatusController', () => {
-	let controller: StatusController;
-	let statusService: StatusService;
+  let controller: StatusController;
+  let statusService: StatusService;
 
-	beforeEach(async () => {
-		const module: TestingModule = await Test.createTestingModule({
-			controllers: [StatusController],
-			providers: [
-				{
-					provide: StatusService,
-					useValue: {
-						createStatus: jest.fn(),
-						updateStatus: jest.fn(),
-						deleteStatus: jest.fn(),
-						findAllStatuses: jest.fn(),
-						getStatusById: jest.fn(),
-						
-					},
-				},
-			],
-		}).compile();
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [StatusController],
+      providers: [
+        {
+          provide: StatusService,
+          useValue: {
+            createStatus: jest.fn(),
+            updateStatus: jest.fn(),
+            deleteStatus: jest.fn(),
+            findAllStatuses: jest.fn(),
+            getStatusById: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
 
-		controller = module.get<StatusController>(StatusController);
-		statusService = module.get<StatusService>(StatusService);
-	});
+    controller = module.get<StatusController>(StatusController);
+    statusService = module.get<StatusService>(StatusService);
+  });
 
-	afterEach(() => {
-		jest.clearAllMocks();
-	});
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-	it('should be defined', () => {
-		expect(controller).toBeDefined();
-	});
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
 
-	describe('createStatus', () => {
-		it('should return created Status', async () => {
-			jest.spyOn(statusService, 'createStatus').mockResolvedValueOnce(mockStatus as StatusEntity);
+  describe('createStatus', () => {
+    it('should return created Status', async () => {
+      jest.spyOn(statusService, 'createStatus').mockResolvedValueOnce(mockStatus as StatusEntity);
 
-			const result = await controller.createStatus(MockStatusDto);
+      const result = await controller.createStatus(MockStatusDto);
 
-			expect(result).toEqual(mockStatus);
-			expect(statusService.createStatus).toHaveBeenCalledWith(MockStatusDto);
-		});
+      expect(result).toEqual(mockStatus);
+      expect(statusService.createStatus).toHaveBeenCalledWith(MockStatusDto);
+    });
 
-		it('should throw NotFoundException if Status creation fails', async () => {
-			jest.spyOn(statusService, 'createStatus').mockRejectedValueOnce(new NotFoundException());
+    it('should throw NotFoundException if Status creation fails', async () => {
+      jest.spyOn(statusService, 'createStatus').mockRejectedValueOnce(new NotFoundException());
 
-			await expect(controller.createStatus(MockStatusDto)).rejects.toThrow(NotFoundException);
-			expect(statusService.createStatus).toHaveBeenCalledWith(MockStatusDto);
-		});
-	});
+      await expect(controller.createStatus(MockStatusDto)).rejects.toThrow(NotFoundException);
+      expect(statusService.createStatus).toHaveBeenCalledWith(MockStatusDto);
+    });
+  });
 
-	describe('updateStatus', () => {
-		it('should return updated status', async () => {
-			const mockStatus = {
-				id: 1,
-				value: mockUpdateStatusDto.value,
-				visible: mockUpdateStatusDto.visible,
-				// created_at: new Date(),
-				// updated_at: new Date(),
-				// deleted_at: null,
-			};
+  describe('updateStatus', () => {
+    it('should return updated status', async () => {
+      const mockStatus = {
+        id: 1,
+        value: mockUpdateStatusDto.value,
+        visible: mockUpdateStatusDto.visible,
+        // created_at: new Date(),
+        // updated_at: new Date(),
+        // deleted_at: null,
+      };
 
-			jest.spyOn(statusService, 'updateStatus').mockResolvedValueOnce(mockStatus as StatusEntity);
+      jest.spyOn(statusService, 'updateStatus').mockResolvedValueOnce(mockStatus as StatusEntity);
 
-			const result = await controller.updateStatus(mockStatusId, mockUpdateStatusDto);
+      const result = await controller.updateStatus(mockStatusId, mockUpdateStatusDto);
 
-			expect(result).toEqual(mockStatus);
-			expect(statusService.updateStatus).toHaveBeenCalledWith(+mockStatusId, mockUpdateStatusDto);
-		});
+      expect(result).toEqual(mockStatus);
+      expect(statusService.updateStatus).toHaveBeenCalledWith(+mockStatusId, mockUpdateStatusDto);
+    });
 
-		it('should throw NotFoundException if status update fails', async () => {
-			jest.spyOn(statusService, 'updateStatus').mockRejectedValueOnce(new NotFoundException());
+    it('should throw NotFoundException if status update fails', async () => {
+      jest.spyOn(statusService, 'updateStatus').mockRejectedValueOnce(new NotFoundException());
 
-			await expect(controller.updateStatus(mockStatusId, mockUpdateStatusDto)).rejects.toThrow(NotFoundException);
-			expect(statusService.updateStatus).toHaveBeenCalledWith(+mockStatusId, mockUpdateStatusDto);
-		});
-	});
-	describe('deleteStatus', () => {
-		it('should successfully delete the status', async () => {
+      await expect(controller.updateStatus(mockStatusId, mockUpdateStatusDto)).rejects.toThrow(NotFoundException);
+      expect(statusService.updateStatus).toHaveBeenCalledWith(+mockStatusId, mockUpdateStatusDto);
+    });
+  });
+  describe('deleteStatus', () => {
+    it('should successfully delete the status', async () => {
+      await controller.deleteStatus(mockStatusId);
 
-			await controller.deleteStatus(mockStatusId);
+      expect(statusService.deleteStatus).toHaveBeenCalledWith(+mockStatusId);
+    });
 
-			expect(statusService.deleteStatus).toHaveBeenCalledWith(+mockStatusId);
-		});
+    it('should throw NotFoundException if status does not exist', async () => {
+      jest.spyOn(statusService, 'deleteStatus').mockRejectedValueOnce(new NotFoundException());
 
-		it('should throw NotFoundException if status does not exist', async () => {
+      await expect(controller.deleteStatus(mockStatusId)).rejects.toThrow(NotFoundException);
+      expect(statusService.deleteStatus).toHaveBeenCalledWith(+mockStatusId);
+    });
+  });
+  describe('findAllStatus', () => {
+    it('should return paginated data of Statuses', async () => {
+      const mockPage = '1';
+      const mockLimit = '10';
+      const mockResult: PaginatedData<StatusEntity> = {
+        data: [new StatusEntity(), new StatusEntity()],
+        total: 2,
+        page: 1,
+        limit: 10,
+      };
 
-			jest.spyOn(statusService, 'deleteStatus').mockRejectedValueOnce(new NotFoundException());
+      jest.spyOn(statusService, 'findAllStatuses').mockResolvedValueOnce(mockResult);
 
-			await expect(controller.deleteStatus(mockStatusId)).rejects.toThrow(NotFoundException);
-			expect(statusService.deleteStatus).toHaveBeenCalledWith(+mockStatusId);
-		});
-	});
-	describe('findAllStatus', () => {
-		it('should return paginated data of Statuses', async () => {
-			const mockPage = '1';
-			const mockLimit = '10';
-			const mockResult: PaginatedData<StatusEntity> = {
-				data: [new StatusEntity(), new StatusEntity()],
-				total: 2,
-				page: 1,
-				limit: 10,
-			};
+      const result = await controller.findAllStatus(mockPage, mockLimit);
 
-			jest.spyOn(statusService, 'findAllStatuses').mockResolvedValueOnce(mockResult);
+      expect(result).toEqual(mockResult);
+      expect(statusService.findAllStatuses).toHaveBeenCalledWith(+mockPage, +mockLimit);
+    });
+  });
+  describe('getStatusById', () => {
+    it('should return status by id', async () => {
+      jest.spyOn(statusService, 'getStatusById').mockResolvedValueOnce(mockStatus);
 
-			const result = await controller.findAllStatus(mockPage, mockLimit);
+      const result = await controller.getStatusById(mockStatusId);
 
-			expect(result).toEqual(mockResult);
-			expect(statusService.findAllStatuses).toHaveBeenCalledWith(+mockPage, +mockLimit);
-		});
-	});
-	describe('getStatusById', () => {
-		it('should return status by id', async () => {
+      expect(result).toEqual(mockStatus);
+      expect(statusService.getStatusById).toHaveBeenCalledWith(+mockStatusId);
+    });
 
-			jest.spyOn(statusService, 'getStatusById').mockResolvedValueOnce(mockStatus);
+    it('should throw NotFoundException if status not found', async () => {
+      jest.spyOn(statusService, 'getStatusById').mockRejectedValueOnce(new NotFoundException());
 
-			const result = await controller.getStatusById(mockStatusId);
-
-			expect(result).toEqual(mockStatus);
-			expect(statusService.getStatusById).toHaveBeenCalledWith(+mockStatusId);
-		});
-
-		it('should throw NotFoundException if status not found', async () => {
-
-			jest.spyOn(statusService, 'getStatusById').mockRejectedValueOnce(new NotFoundException());
-
-			await expect(controller.getStatusById(mockStatusId)).rejects.toThrow(NotFoundException);
-			expect(statusService.getStatusById).toHaveBeenCalledWith(+mockStatusId);
-		});
-	});
-
+      await expect(controller.getStatusById(mockStatusId)).rejects.toThrow(NotFoundException);
+      expect(statusService.getStatusById).toHaveBeenCalledWith(+mockStatusId);
+    });
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { Test, TestingModule } from '@nestjs/testing';
 // import { StatusController } from './status.controller';
@@ -268,8 +214,6 @@ describe('StatusController', () => {
 // 		});
 // 	});
 
-
-	
 // 	// describe('findAllStatus', () => {
 // 	// 	it('should return paginated data of statuses', async () => {
 // 	// 		const page = 1;

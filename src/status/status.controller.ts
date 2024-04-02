@@ -7,47 +7,36 @@ import { StatusEntity } from './entities/status.entity';
 import { PaginatedData } from '../types/interface';
 import { ApiResponse } from '@nestjs/swagger';
 
-
 @Controller('status')
 export class StatusController {
-	constructor(private readonly statusService: StatusService) { }
+  constructor(private readonly statusService: StatusService) {}
 
-	@Post('create')
-	async createStatus(@Body() statusData: StatusCreateDto): Promise<StatusEntity> {
-		return await this.statusService.createStatus(statusData);
-	}
+  @Post('create')
+  async createStatus(@Body() statusData: StatusCreateDto): Promise<StatusEntity> {
+    return await this.statusService.createStatus(statusData);
+  }
 
-	@Patch(':id')
-	async updateStatus(
-		@Param('id') id: string,
-		@Body() updateStatusData: StatusUpdateDto,
-	): Promise<StatusEntity> {
-		return this.statusService.updateStatus(+id, updateStatusData);
-	}
+  @Patch(':id')
+  async updateStatus(@Param('id') id: string, @Body() updateStatusData: StatusUpdateDto): Promise<StatusEntity> {
+    return this.statusService.updateStatus(+id, updateStatusData);
+  }
 
-	@Delete(':id')
-	async deleteStatus(@Param('id') id: string): Promise<void> {
-		await this.statusService.deleteStatus(+id);
-	}
+  @Delete(':id')
+  async deleteStatus(@Param('id') id: string): Promise<void> {
+    await this.statusService.deleteStatus(+id);
+  }
 
+  @ApiResponse({ type: StatusEntity, isArray: true })
+  @Get('all')
+  async findAllStatus(
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ): Promise<PaginatedData<StatusEntity>> {
+    return this.statusService.findAllStatuses(+page, +limit);
+  }
 
-
-	@ApiResponse({ type: StatusEntity, isArray: true })
-	@Get('all')
-	async findAllStatus(
-		@Query('page') page: string,
-		@Query('limit') limit: string,
-	): Promise<PaginatedData<StatusEntity>> {
-		return this.statusService.findAllStatuses(+page, +limit);
-	}
-
-	@Get(':id')
-	async getStatusById(@Param('id') statusId?: string): Promise<StatusEntity> {
-		return this.statusService.getStatusById(+statusId);
-	}
-
-
-
+  @Get(':id')
+  async getStatusById(@Param('id') statusId?: string): Promise<StatusEntity> {
+    return this.statusService.getStatusById(+statusId);
+  }
 }
-
-

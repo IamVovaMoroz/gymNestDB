@@ -1,4 +1,3 @@
-
 ## Description
 
 Admin CRM for the project
@@ -8,10 +7,13 @@ Admin CRM for the project
 ```bash
 $ npm install
 ```
+
 ## Copy .env
+
 ```bash
 cp .env.sample .env
 ```
+
 ## Running the app
 
 ```bash
@@ -39,12 +41,14 @@ $ npm run test:cov
 ```
 
 ## Auto documentation
+
 ```js
-`${url}/swagger`
+`${url}/swagger`;
 ```
 
 ## File name rules:
-   Controllers must end with `.controller.ts.`
+
+Controllers must end with `.controller.ts.`
 
 entities at `.entity.ts.`
 
@@ -53,8 +57,8 @@ DTO and `.dto.ts`
 So now your documentation will be generated automatically without using decorators
 `@ApiTags(), @ApiOperation(), @ApiResponse()`
 
+## Note:
 
-## Note: 
 All API responses will follow the format of ApiResponseDto.
 
 ```ts

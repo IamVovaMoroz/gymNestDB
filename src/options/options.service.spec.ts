@@ -17,7 +17,8 @@ describe('OptionsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OptionsService,
+      providers: [
+        OptionsService,
         {
           provide: getRepositoryToken(OptionEntity),
           useClass: Repository,
@@ -65,7 +66,7 @@ describe('OptionsService', () => {
         key: 'example_key',
         created_at: new Date(),
         updated_at: new Date(),
-        deleted_at: null
+        deleted_at: null,
       };
 
       jest.spyOn(optionRepository, 'findOne').mockResolvedValueOnce(existingOption);

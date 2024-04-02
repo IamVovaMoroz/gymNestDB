@@ -19,7 +19,6 @@ import { TestModule } from './test/test.module';
 import { OptionsModule } from './options/options.module';
 import { TypeModule } from './type/type.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,7 +30,7 @@ import { TypeModule } from './type/type.module';
     TestModule,
     StatusModule,
     OptionsModule,
-    TypeModule
+    TypeModule,
   ],
   controllers: [HealthController],
   providers: [

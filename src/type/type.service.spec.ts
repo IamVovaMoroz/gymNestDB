@@ -7,7 +7,6 @@ import { Repository, DeleteResult, SelectQueryBuilder } from 'typeorm';
 import { MockExpectedResultOfType, mockUpdateTypeDto } from '../common/constants';
 import { TypesCreateDto } from './dto/type.create.dto';
 
-
 const mockPage = 1;
 const mockLimit = 10;
 const mockTypeId = 1;
@@ -45,7 +44,7 @@ describe('TypeService', () => {
     it('should create a new type', async () => {
       const mockDto: TypesCreateDto = {
         value: 'example_value3',
-        visible: true
+        visible: true,
       };
 
       jest.spyOn(typeRepository, 'findOne').mockResolvedValueOnce(null);
@@ -68,7 +67,7 @@ describe('TypeService', () => {
         visible: true,
         created_at: new Date(),
         updated_at: new Date(),
-        deleted_at: null
+        deleted_at: null,
       };
 
       jest.spyOn(typeRepository, 'findOne').mockResolvedValueOnce(existingType);

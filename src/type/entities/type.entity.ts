@@ -2,23 +2,21 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'types' })
 export class TypesEntity {
-	@PrimaryGeneratedColumn('increment')
-	id: number;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
-	@Column({ length: 70, nullable: false, type: 'varchar' })
-	value: string;
+  @Column({ length: 70, nullable: false, type: 'varchar' })
+  value: string;
 
-	@Column({ default: true })
-	visible: boolean;
+  @Column({ default: true })
+  visible: boolean;
 
-	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-	created_at: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
 
-	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-	updated_at: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updated_at: Date;
 
-	@Column({ type: 'timestamp', nullable: true })
-	deleted_at: Date;
-
-
+  @Column({ type: 'timestamp', nullable: true })
+  deleted_at: Date;
 }
