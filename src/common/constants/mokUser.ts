@@ -1,6 +1,6 @@
-import { UserCreateDto } from '../../user/dto/user.create.dto';
-import { UserEntity } from '../../user/entities/user.entity';
-import { UserUpdateDto } from '../../user/dto/user.update.dto';
+import { UserCreateDto } from '../../modules/user/dto/user.create.dto';
+import { UserEntity } from '../../modules/user/entities/user.entity';
+import { UserUpdateDto } from '../../modules/user/dto/user.update.dto';
 
 export const MokUserDto: UserCreateDto = {
   email: 'test@example.com',
